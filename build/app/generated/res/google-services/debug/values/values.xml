@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">950521156057-fkfn10lvpf7fbpde0s363tupjuf1jdm2.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">950521156057</string>
+    <string name="google_api_key" translatable="false">AIzaSyAEsh6V0a917QVK-SiVWHzx_W1MOkEDMw8</string>
+    <string name="google_app_id" translatable="false">1:950521156057:android:ef968b6811df3cef5d09c8</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAEsh6V0a917QVK-SiVWHzx_W1MOkEDMw8</string>
+    <string name="google_storage_bucket" translatable="false">loginauth-a02de.appspot.com</string>
+    <string name="project_id" translatable="false">loginauth-a02de</string>
+</resources>
