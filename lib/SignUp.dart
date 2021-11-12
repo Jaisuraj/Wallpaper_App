@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+
+
+
+final Future<FirebaseApp> _future = Firebase.initializeApp();
+DatabaseReference dbRef = FirebaseDatabase.instance.reference().child("Users");
+
 
 class SignUp extends StatefulWidget {
   @override
@@ -8,6 +16,8 @@ class SignUp extends StatefulWidget {
 
 class _SignUpState extends State<SignUp> {
   FirebaseAuth _auth = FirebaseAuth.instance;
+
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String _name, _email, _password;
@@ -15,7 +25,14 @@ class _SignUpState extends State<SignUp> {
   checkAuthentication() async {
     _auth.authStateChanges().listen((user) async {
       if (user != null) {
+
+
+          dbRef.push().set({"user id": user.uid,"email": user.email, "password":_password, "name" : user.displayName});
+
         Navigator.pushReplacementNamed(context, "/");
+
+
+
       }
     });
   }
@@ -27,17 +44,25 @@ class _SignUpState extends State<SignUp> {
   }
 
   signUp() async {
+
     if (_formKey.currentState.validate()) {
+
+
       _formKey.currentState.save();
 
       try {
         UserCredential user = await _auth.createUserWithEmailAndPassword(
             email: _email, password: _password);
+
+        
         if (user != null) {
           // UserUpdateInfo updateuser = UserUpdateInfo();
           // updateuser.displayName = _name;
           //  user.updateProfile(updateuser);
           await _auth.currentUser.updateProfile(displayName: _name);
+
+
+
           // await Navigator.pushReplacementNamed(context,"/") ;
 
         }
@@ -87,6 +112,8 @@ class _SignUpState extends State<SignUp> {
                   children: <Widget>[
                     Container(
                       child: TextFormField(
+
+                          // ignore: missing_return
                           validator: (input) {
                             if (input.isEmpty) return 'Enter Name';
                           },
@@ -98,6 +125,8 @@ class _SignUpState extends State<SignUp> {
                     ),
                     Container(
                       child: TextFormField(
+
+                          // ignore: missing_return
                           validator: (input) {
                             if (input.isEmpty) return 'Enter Email';
                           },
@@ -108,10 +137,12 @@ class _SignUpState extends State<SignUp> {
                     ),
                     Container(
                       child: TextFormField(
+                          // ignore: missing_return
                           validator: (input) {
                             if (input.length < 6)
                               return 'Provide Minimum 6 Character';
                           },
+
                           decoration: InputDecoration(
                             labelText: 'Password',
                             prefixIcon: Icon(Icons.lock),
@@ -140,6 +171,8 @@ class _SignUpState extends State<SignUp> {
           ],
         ),
       ),
+
     ));
   }
 }
+
